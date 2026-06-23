@@ -1,8 +1,6 @@
 #include "delay_f103.h"
 
-
 void TIM2_Config(){
-	
 	// 1. Enable Timer clock
 	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 	
@@ -14,6 +12,7 @@ void TIM2_Config(){
 	TIM2->CR1 |= TIM_CR1_CEN;						// Enable the timer
 	while (!(TIM2->SR & TIM_SR_UIF));		// While UIF is not set, stay here
 }
+
 
 void delay_us(volatile uint16_t us){
 	// 1. Reset counter
