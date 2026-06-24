@@ -24,7 +24,8 @@
 */
 void usart1_config();
 
-void usart1_tx(uint8_t data);
+void usart1_txChar(uint8_t data);
+void usart1_txString(char *string);
 
 void usart1_rx();
 

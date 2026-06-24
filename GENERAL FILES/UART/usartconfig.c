@@ -1,4 +1,4 @@
-#include "uartconfig.h"
+#include "usartconfig.h"
 
 /* Steps Taken
 	1. Enable USART1 clock and GPIO clock
@@ -39,15 +39,24 @@ void usart1_config(){
 	1. Write the data to send in the USART_DR reg (clears the TXE bit). Repeat for each data to be transmitted in case of single buffer
 	2. After writing the last data in the USART_DR reg, wait until TC = 1 (means transmission of the last frame is done). This is required for when USART is disabled or enters Halt mode
 *****************************************************************************************************************************/
-void usart1_tx(uint8_t data){
+void usart1_txChar(uint8_t data){
 	USART1->DR = data;													// Load data into data reg
 	while(!(USART1->DR & USART_SR_TC));					// Wait for TC to set
 	
 }
 
+void usart2_txString(char *string){
+	while (*string){
+		usart1_txChar(*string++);
+	}
+}
+
 /********************************************************  USART RX ******************************************************** 
 	1. Set the RE bit in USART_CR1. This enables receiver to look for a start bit.
 *****************************************************************************************************************************/
-void usart1_rx(){
-
+uint8_t usart1_rxChar(){
+	uint8_t temp;
+	while (!(USART1->CR1 & USART_SR_RXNE));			// Wait for RXNE to be ready
+	temp = USART1->DR;													// Transfer data from reg to temp
+	return temp;																// Return data
 }
