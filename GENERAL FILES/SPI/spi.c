@@ -1,6 +1,5 @@
 #include "spi.h"
 
-
 /* Procedure for MOSI = data out, MISO = data in
 	1. Enable clock
 	2. Select BR[2:0] bits to define baud rate in SPI_CR1
