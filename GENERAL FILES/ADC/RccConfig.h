@@ -40,8 +40,8 @@ void SysClockConfig(void){
 	RCC->CFGR |= RCC_CFGR_PLLXTPRE_HSE; 											// PREDIV1  = /1
 	RCC->CFGR |= RCC_CFGR_HPRE_DIV1;													// AHB,  PS = /1
 	RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;													// APB1, PS = /2
-	RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;													// APB2, PS = /1
-	RCC->CFGR |= RCC_CFGR_ADCPRE_DIV6;												// ADC,  PS = /6
+	RCC->CFGR |= RCC_CFGR_PPRE2_DIV2;													// APB2, PS = /1
+	RCC->CFGR |= RCC_CFGR_ADCPRE_DIV8;												// ADC,  PS = /6
 	
 	RCC->CFGR |= RCC_CFGR_PLLSRC_HSE | RCC_CFGR_PLLMULL9;			// Set PLL = HSE, PLLMUL = 9
 	

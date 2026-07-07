@@ -33,6 +33,7 @@ void DMA_config(uint32_t srcAddr, uint32_t destAddr, uint8_t size){
 	DMA1_Channel1->CCR |= DMA_CCR1_EN;										// Enable DMA channel
 }
 
+
 /* ADC Config
 	1. Enable clock and GPIO
 	2. Set parameters in CR1 (Scan Mode)
@@ -41,7 +42,6 @@ void DMA_config(uint32_t srcAddr, uint32_t destAddr, uint8_t size){
 	5. Set Regular Channel sequence length in ADC_SQR1
 	6. Set GPIO pins
 */
-
 void adc_config(){
 	// RCC
 	RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;												// Enable ADC clock
@@ -58,18 +58,16 @@ void adc_config(){
 	// SMPR2
 	ADC1->SMPR2 |= (0 << 0);																	// Channel 1 will be sampled for 7.5 cycles
 	ADC1->SMPR2 |= (0 << 3);																	// Channel 3 will be sampled for 7.5 cycles
-	ADC1->SMPR1 |= ADC_SMPR1_SMP16;														// Channel 16: 17.1 us = Sampling time + 12.5 / 12MHz -> 192.7 cycles
+	ADC1->SMPR1 |= (6 << 18);																	// Channel 16: 17.1 us = Sampling time + 12.5 / 4.5MHz -> 64.45 cycles
 	
 	// SQR1
-	ADC1->SQR1 |= (2 << 20);																	// 3 channels, 3 converions
+	ADC1->SQR1 |= (2 << 20);																	// 3 channels, 3 conversions
 	
 	// SQR3
 	ADC1->SQR3 |= (1 << 0);																		// SQ1 = Ch 1, bits correlate to what channel is sequenced
 	ADC1->SQR3 |= (3 << 5);																		// SQ2 = Ch 3
 	ADC1->SQR3 |= (16 << 10);																	// SQ3 = Ch 16 (temp sensor)
-	
-	ADC1->CR2 |= ADC_CR2_TSVREFE;
-	
+		
 	// GPIO - PA0 & PA1
 	GPIOA->CRL &= ~(GPIO_CRL_MODE1);													// PA1 Input mode
 	GPIOA->CRL &= ~(GPIO_CRL_CNF1);														// PA1 Analog mode
@@ -78,7 +76,7 @@ void adc_config(){
 }
 
 void adc_on(){
-	ADC1->CR2 |= ADC_CR2_ADON;						  									// Enable ADC
+	ADC1->CR2 |= ADC_CR2_TSVREFE | ADC_CR2_ADON;						  // Enable ADC & temp sense Vref
 	delay_us(1);																							// tstab = 1 us
 	ADC1->CR2 |= ADC_CR2_ADON;																// Set again to start converion
 
@@ -100,6 +98,6 @@ void adc_start(){
 		 avg_slope = 4.3mV/C per datasheet
 */
 double adc_tempRead(uint16_t *data){
-	float temp = (1.43 - (float)(3.3*data[2]/(float) 4096)) + 25;
+	float temp = ((1.43 - ((float)(3.3*data[2]/(float) 4095))) / 0.0043) + 25; 		// temp in C = [(V25 - Vsense) / avg_slope] - 25, V25 & avg_slope in datasheet; Vsense = (VDD * adc_val) / resolution
 	return temp;
 }
