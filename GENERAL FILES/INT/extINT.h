@@ -2,4 +2,4 @@
 
 void gpio_config();
 void interrupt_config();
-int IRQ_Handler();
+//int IRQ_Handler();

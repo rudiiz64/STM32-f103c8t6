@@ -2,9 +2,9 @@
 
 void gpio_config(){
 	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-	RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
-	GPIOA->CRL &= ~(GPIO_CRL_MODE0);
-	GPIOA->CRL |= GPIO_CRL_CNF0_1;
+	GPIOA->CRL &= ~(0xf << 0);
+	GPIOA->CRL |= (8 << 0);
+	GPIOA->ODR |= (1 << 0);
 }
 
 /* Interrupt Configuration
@@ -17,7 +17,9 @@ void gpio_config(){
 
 */
 void interrupt_config(){
-	AFIO->EXTICR[0] = AFIO_EXTICR1_EXTI0_PA;				// Or &= ~(0xf << 0) ; Setting EXTICR1 to select PA0
+	RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
+									
+	AFIO->EXTICR[0] &= ~(0xf << 0);									// Setting control for MUX to EXTI0 to select PA0
 	
 	EXTI->IMR |= (1 << 0);													// Enable interrupt request
 	
@@ -28,10 +30,3 @@ void interrupt_config(){
 	NVIC_EnableIRQ(EXTI0_IRQn);											// Enable the interrupt on EXTI0
 }
 
-int IRQ_Handler(){
-	if (EXTI->PR & (1 << 0)){												// If interrupt triggers
-		EXTI->PR = (1 << 0);													// Clear EXTI->PR bit
-		return 1;
-	}
-	return 0;
-}
