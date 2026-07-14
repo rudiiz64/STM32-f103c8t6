@@ -9,7 +9,7 @@
   C:\Users\scath\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\stm32f10x_spi.h \
   C:\Users\scath\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\stm32f10x_usart.h \
   C:\Users\scath\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\misc.h \
-  C:\Users\scath\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\RTE_Driver\GPIO_STM32F10x.h \
+  delay_f103.h \
   C:\Users\scath\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.3.0\Source\include\FreeRTOS.h \
   RTE\RTOS\FreeRTOSConfig.h \
   C:\Users\scath\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.3.0\CMSIS\RTOS2\FreeRTOS\Include\freertos_evr.h \

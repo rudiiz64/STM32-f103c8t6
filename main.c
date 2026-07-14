@@ -3,7 +3,7 @@
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_spi.h"
 
-#include "GPIO_STM32F10x.h"
+#include "delay_f103.h"
 
 /* RTOS Defines */
 #include "FreeRTOS.h"
@@ -11,7 +11,7 @@
 #include "task.h"
 
 /* Global Define */
-int LED_VAL = pdTRUE;
+uint16_t LED_VAL = pdTRUE;
 uint16_t LED1 = GPIO_Pin_0;
 
 /* Struct */
@@ -67,10 +67,12 @@ void ledControlTask(void *pvParam){
 	/* Toggle LED */
 	if (LED_VAL){
 		/* Writing only to PA0 for now */
-		GPIO_WriteBit(GPIOA, *pin, (LED_VAL) ^ 1);
-		LED_VAL = 0;
+		GPIO_WriteBit(GPIOA, *pin, LED_VAL);
+		LED_VAL ^= LED_VAL;
 	}
-	
+	else {
+		LED_VAL ^= LED_VAL;
+	}	
 }
 
 void lcdControlTask(){
@@ -82,12 +84,15 @@ void ledPWMTask(){
 }
 
 int main(void){
+	SystemInit();
 	gpio_Config();
+	TIM2_Config();
 	
 	/* LED Task Function, LED Task, Normal stack size, pass PIN, HIGHEST Priority, No Handle */
 	xTaskCreate(ledControlTask, "LED Task", configMINIMAL_STACK_SIZE, (void*) &LED1, 1, NULL);
 	for(;;){
 		ledControlTask(&LED1);
+		delay_ms(500);
 	}
 	return 0;
 }
