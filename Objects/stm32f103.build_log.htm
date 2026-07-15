@@ -22,20 +22,15 @@ Dialog DLL:      TCM.DLL V1.56.6.0
  
 <h2>Project:</h2>
 C:\Users\scath\Desktop\GitHub\STM32-f103c8t6\stm32f103.uvprojx
-Project File Date:  07/14/2026
+Project File Date:  07/15/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Users\scath\AppData\Local\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target_1'
-compiling system_stm32f10x.c...
 compiling delay_f103.c...
-assembling startup_stm32f10x_md.s...
+compiling stm32f10x_rcc.c...
 compiling misc.c...
-compiling usartconfig.c...
-compiling os_systick.c...
-compiling main.c...
 compiling freertos_evr.c...
-compiling stm32f10x_gpio.c...
 i2c.c(52): warning: unused variable 'temp' [-Wunused-variable]
    52 |         uint8_t temp = I2C1->SR1 | I2C1->SR2;                                                           // Read both SR1 and SR2 to clear ADDR; temp not used
       |                 ^~~~
@@ -44,21 +39,26 @@ i2c.c(68): warning: unused variable 'temp' [-Wunused-variable]
       |                 ^~~~
 2 warnings generated.
 compiling i2c.c...
+compiling main.c...
 compiling stm32f10x_usart.c...
-compiling clib_os.c...
 compiling stm32f10x_spi.c...
+compiling clib_os.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_md.s...
 compiling GPIO_STM32F10x.c...
-compiling stm32f10x_rcc.c...
-compiling list.c...
+compiling os_systick.c...
+compiling stm32f10x_gpio.c...
+compiling usartconfig.c...
 compiling cmsis_os2.c...
 compiling event_groups.c...
+compiling list.c...
 compiling port.c...
 compiling heap_4.c...
 compiling timers.c...
 compiling queue.c...
 compiling tasks.c...
 linking...
-Program Size: Code=12450 RO-data=278 RW-data=8 ZI-data=11544  
+Program Size: Code=12754 RO-data=278 RW-data=8 ZI-data=11552  
 ".\Objects\stm32f103.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -116,27 +116,27 @@ Package Vendor: Keil
       Source file:   CMSIS/RTOS2/Source/os_systick.c
 
    * Component: ARM::CMSIS:RTOS2:FreeRTOS&Cortex-M@11.3.0
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/cmsis_os2.c
       Include file:  CMSIS/RTOS2/FreeRTOS/Include/freertos_mpool.h
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/clib_os.c
-      Source file:   CMSIS/RTOS2/FreeRTOS/Source/cmsis_os2.c
 
    * Component: ARM::RTOS&FreeRTOS:Config&CMSIS RTOS2@11.3.0
       Include file:  CMSIS/RTOS2/FreeRTOS/Config/FreeRTOSConfig.h
 
    * Component: ARM::RTOS&FreeRTOS:Core&Cortex-M@11.3.0
-      Include file:  Source/include/task.h
-      Include file:  Source/include/FreeRTOS.h
-      Source file:   Source/tasks.c
-      Include file:  Source/include/semphr.h
-      Include file:  Source/include/queue.h
-      Source file:   Source/list.c
-      Source file:   Source/portable/GCC/ARM_CM3/port.c
       Source file:   Source/queue.c
+      Source file:   Source/portable/GCC/ARM_CM3/port.c
+      Include file:  Source/include/FreeRTOS.h
+      Include file:  Source/include/semphr.h
+      Include file:  Source/include/task.h
+      Source file:   Source/tasks.c
+      Source file:   Source/list.c
+      Include file:  Source/include/queue.h
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/freertos_evr.c
 
    * Component: ARM::RTOS&FreeRTOS:Event Groups@11.3.0
-      Include file:  Source/include/event_groups.h
       Source file:   Source/event_groups.c
+      Include file:  Source/include/event_groups.h
 
    * Component: ARM::RTOS&FreeRTOS:Heap&Heap_4@11.3.0
       Source file:   Source/portable/MemMang/heap_4.c
@@ -156,21 +156,21 @@ Package Vendor: Keil
       Include file:  RTE_Driver/GPIO_STM32F10x.h
 
    * Component: Keil::Device:Startup@1.0.0
-      Source file:   Device/Source/system_stm32f10x.c
-      Source file:   Device/Source/ARM/STM32F1xx_OPT.s
       Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+      Source file:   Device/Source/system_stm32f10x.c
       Include file:  RTE_Driver/Config/RTE_Device.h
+      Source file:   Device/Source/ARM/STM32F1xx_OPT.s
 
    * Component: Keil::Device:StdPeriph Drivers:Framework@3.6.0
+      Source file:   Device/StdPeriph_Driver/templates/stm32f10x_conf.h
       Source file:   Device/StdPeriph_Driver/templates/stm32f10x_it.c
-      Include file:  Device/StdPeriph_Driver/inc/misc.h
       Source file:   Device/StdPeriph_Driver/src/misc.c
       Include file:  Device/StdPeriph_Driver/templates/stm32f10x_it.h
-      Source file:   Device/StdPeriph_Driver/templates/stm32f10x_conf.h
+      Include file:  Device/StdPeriph_Driver/inc/misc.h
 
    * Component: Keil::Device:StdPeriph Drivers:GPIO@3.6.0
-      Include file:  Device/StdPeriph_Driver/inc/stm32f10x_gpio.h
       Source file:   Device/StdPeriph_Driver/src/stm32f10x_gpio.c
+      Include file:  Device/StdPeriph_Driver/inc/stm32f10x_gpio.h
 
    * Component: Keil::Device:StdPeriph Drivers:RCC@3.6.0
       Source file:   Device/StdPeriph_Driver/src/stm32f10x_rcc.c
@@ -183,7 +183,7 @@ Package Vendor: Keil
    * Component: Keil::Device:StdPeriph Drivers:USART@3.6.0
       Source file:   Device/StdPeriph_Driver/src/stm32f10x_usart.c
       Include file:  Device/StdPeriph_Driver/inc/stm32f10x_usart.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

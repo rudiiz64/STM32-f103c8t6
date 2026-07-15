@@ -419,6 +419,11 @@
               <FileType>5</FileType>
               <FilePath>.\usartconfig.h</FilePath>
             </File>
+            <File>
+              <FileName>RccConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\RccConfig.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
