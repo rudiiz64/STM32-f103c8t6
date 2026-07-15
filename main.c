@@ -13,12 +13,12 @@
 
 /* Global Define */
 volatile uint16_t LED_VAL = pdTRUE;
-uint16_t LED1 = GPIO_Pin_1;
+uint16_t *LED1 = (uint16_t *) GPIO_Pin_0;
 
 /* Struct */
 typedef struct PH_STRUCT{
 	// Struct will be modified later; placeholder def
-	uint16_t currPin;
+	char structMem1;
 	char structMem2;
 	
 } phStruct;
@@ -69,21 +69,17 @@ void gpio_Config(){
 		3. LCD Screen
 */
 
-void ledControlTask(){
-	//uint16_t *pin = (uint16_t *) pvParam;
+void ledControlTask(void* pvParam){
+	uint16_t *pin = (uint16_t *) pvParam;																			// pin (0x080032AE) -> 0x20000000
+	
 	/* Toggle LED */
 	if (LED_VAL){
 		/* Writing only to PA0 for now */
-		//GPIO_WriteBit(GPIOA, pinStruct.currPin, LED_VAL);
-		GPIO_SetBits(GPIOA, pinStruct.currPin);
-		//GPIO_Write(GPIOA, LED_VAL);
-		//GPIOA->BSRR |= (LED_VAL << 0);
+		GPIO_WriteBit(GPIOA, *pin, LED_VAL);																		// pin = 0x20000000 (adr) -> 0x00000001 (val)
 		LED_VAL = 0;
 	}
 	else {
-		GPIO_WriteBit(GPIOA, pinStruct.currPin, LED_VAL);
-		//GPIO_Write(GPIOA, LED_VAL);
-		//GPIOA->BSRR |= ~(LED_VAL << 0) << 16;
+		GPIO_WriteBit(GPIOA, *pin, LED_VAL);
 		LED_VAL = 1;
 	}	
 }
@@ -101,13 +97,11 @@ int main(void){
 	gpio_Config();
 	TIM2_Config();
 	
-	phStruct pinStruct;
-	pinStruct.currPin = GPIO_Pin_0;
 	
 	/* LED Task Function, LED Task, Normal stack size, pass PIN, HIGHEST Priority, No Handle */
 	xTaskCreate(ledControlTask, "LED Task", configMINIMAL_STACK_SIZE, (void*) &LED1, 1, NULL);
 	for(;;){
-		ledControlTask();
+		ledControlTask(&LED1);											// We pass the address of LED1 which contains the value 0x00000001
 		delay_ms(500);
 	}
 	return 0;
