@@ -28,6 +28,8 @@
 #define RTE_RTOS_FreeRTOS_HEAP_4        /* RTOS FreeRTOS Heap 4 */
 /* ARM::RTOS&FreeRTOS:Timers@11.3.0 */
 #define RTE_RTOS_FreeRTOS_TIMERS        /* RTOS FreeRTOS Timers */
+/* Keil::Device:StdPeriph Drivers:EXTI@3.6.0 */
+#define RTE_DEVICE_STDPERIPH_EXTI
 /* Keil::Device:StdPeriph Drivers:Framework@3.6.0 */
 #define RTE_DEVICE_STDPERIPH_FRAMEWORK
 /* Keil::Device:StdPeriph Drivers:GPIO@3.6.0 */
